@@ -11,9 +11,10 @@ This prototype fulfills the complete specifications of **Option B — Multilevel
 1. **🎙️ Voice Assistant & Detailed Expert Q&A (AI-Powered)**
    - **Speech-to-Text (STT)**: Native `st.audio_input` browser integration captures clear voice commands.
    - **Direct Audio LLM Analysis**: Sends recorded audio files directly to the Google Gemini API (`gemini-flash-lite-latest`) for unified, low-latency transcription and comprehension.
-   - **Text-to-Speech (TTS)**: Synthesizes high-quality audio responses in English and Hindi/Hinglish using `gTTS` and auto-plays them via Streamlit's native `st.audio(..., autoplay=True)`.
-   - **Ask the Organic Expert**: Text-based detailed query search yielding step-by-step organic farming instructions.
+   - **Text-to-Speech (TTS)**: Synthesizes high-quality audio responses in English and 8 regional Indian languages (Hindi, Marathi, Telugu, Tamil, Kannada, Bengali, Punjabi, Gujarati) using `gTTS` and auto-plays them via Streamlit's native `st.audio(..., autoplay=True)`.
+   - **Ask the Organic Expert & Q&A TTS**: Text-based detailed query search yielding step-by-step organic farming instructions, with an integrated **"🔊 Listen to Response"** button that dynamically reads out the detailed answers in the selected language.
    - **Real-Time Reset Widget Control**: Dynamic key counters clear recorded audio/response blocks instantly.
+   - **Farming-Focused Guardrails**: Enforces ZBNF-only advice.
 
 2. **🌾 Crop & Seed Guidance**
    - **Soil Prediction ML**: Utilizes a pre-trained **Random Forest Classifier** (`crop_recommendation_model.pkl`) to recommend the top 3 optimal crops based on N-P-K levels, temperature, humidity, pH, and expected rainfall.
@@ -28,11 +29,25 @@ This prototype fulfills the complete specifications of **Option B — Multilevel
    - **Weather Forecasts**: Fetches temperature and humidity for regional cities, with a smart offline mock data generator.
    - **Mandi Crop Prices**: Lists live-updating market price trends.
    - **📈 AI Mandi Price Analyser**: Triggers a detailed marketing analysis advising on holding/selling strategies, crop shifts, and processing value-addition (e.g., converting mustard to oil).
+   - **💰 ZBNF ROI & Premium Profit Calculator**: An interactive ROI estimator that compares Standard Chemical Farming with ZBNF Natural Farming. It details input cost savings (₹8,000/acre vs. ₹1,500/acre) and 30% organic premium revenues on crops, displaying results in visual glassmorphic cards and comparative progress bars.
 
 5. **📚 Natural Farming Academy**
    - Detailed guides on the **7-Layer Multilevel Canopy Cropping** model ( Coconut $\rightarrow$ Mango $\rightarrow$ Banana $\rightarrow$ Low Shrubs $\rightarrow$ Ground Cover $\rightarrow$ Root Crops $\rightarrow$ Climbers).
    - Preparation guides for traditional organic inputs (*Jeevamrutha*, *Beejamrutha*, *Agni Astra*).
    - Core pillars of ZBNF.
+
+---
+
+## 🌐 Regional Language Support
+The application supports English and 8 major regional Indian languages for both UI navigation scripts, Gemini API outputs, and TTS speech playbacks:
+* **Hindi / हिंदी**
+* **Marathi / मराठी**
+* **Telugu / తెలుగు**
+* **Tamil / தமிழ்**
+* **Kannada / ಕನ್ನಡ**
+* **Bengali / বাংলা**
+* **Punjabi / ਪੰਜਾਬੀ**
+* **Gujarati / ગુજરાતી**
 
 ---
 
@@ -71,6 +86,7 @@ AgroSolution-main/
 ├── docs/
 │   ├── prompt_design.md                      # Prompt Engineering Details
 │   └── architecture.md                       # System Architecture Details
+├── requirements.txt                          # Streamlit dependencies & scikit-learn pin
 ├── README.md                                 # Project Overview (This file)
 └── LICENSE
 ```
@@ -86,8 +102,9 @@ AgroSolution-main/
    ```
 
 2. **Install Dependencies**:
+   Install dependencies directly from the root `requirements.txt` to ensure the correct compatible `scikit-learn` version is configured:
    ```bash
-   pip install streamlit pandas numpy joblib requests gTTS
+   pip install -r requirements.txt
    ```
 
 3. **Configure Environment Variables**:
