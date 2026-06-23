@@ -27,6 +27,17 @@ def get_api_key():
                         return val.strip().replace('"', '').replace("'", "")
     return None
 
+def get_base64_of_bin_file(bin_file):
+    if os.path.exists(bin_file):
+        with open(bin_file, 'rb') as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    return ""
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+bg_image_path = os.path.join(current_dir, 'static', 'images', 'crop_back.jpg')
+bg_img_base64 = get_base64_of_bin_file(bg_image_path)
+
 def call_gemini(prompt, system_instruction=None, mime_type=None, image_bytes=None):
     api_key = get_api_key()
     if not api_key:
@@ -316,87 +327,88 @@ market_prices = {
 }
 
 # Custom premium CSS injection
-st.markdown("""
+st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
     
     /* Main app styling */
-    .stApp {
-        background-color: #0b1f15;
-        background-image: radial-gradient(circle at 10% 20%, rgba(27, 67, 50, 0.18) 0%, transparent 80%),
-                          radial-gradient(circle at 90% 80%, rgba(45, 106, 79, 0.18) 0%, transparent 80%);
+    .stApp {{
+        background: linear-gradient(rgba(11, 31, 21, 0.88), rgba(11, 31, 21, 0.88)), 
+                    url("data:image/jpg;base64,{bg_img_base64}") no-repeat center center fixed;
+        background-size: cover;
         color: #e8f5e9;
         font-family: 'Outfit', 'Inter', sans-serif;
-    }
+    }}
     
     /* Title and Header */
-    h1, h2, h3, h4 {
+    h1, h2, h3, h4 {{
         font-family: 'Outfit', sans-serif;
         color: #e8f5e9;
         font-weight: 700;
         letter-spacing: -0.5px;
-    }
+    }}
     
-    .main-title {
+    .main-title {{
         font-size: 2.8rem;
         background: linear-gradient(135deg, #74c69d 0%, #d8f3dc 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-weight: 800;
         margin-bottom: 2px;
-    }
+    }}
     
-    .subtitle {
+    .subtitle {{
         font-size: 1.1rem;
         color: #b7e4c7;
         font-weight: 400;
         margin-bottom: 20px;
-    }
+    }}
     
     /* Premium Glassmorphic Card */
-    .glass-card {
-        background: rgba(27, 67, 50, 0.35);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(116, 198, 157, 0.2);
+    .glass-card {{
+        background: rgba(18, 48, 38, 0.45);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border: 1px solid rgba(116, 198, 157, 0.25);
         border-radius: 16px;
         padding: 24px;
         margin-bottom: 20px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-        transition: transform 0.3s ease, border-color 0.3s ease;
-    }
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }}
     
-    .glass-card:hover {
-        transform: translateY(-2px);
-        border-color: rgba(116, 198, 157, 0.35);
-    }
+    .glass-card:hover {{
+        transform: translateY(-3px);
+        border-color: rgba(116, 198, 157, 0.5);
+        box-shadow: 0 12px 40px 0 rgba(82, 183, 136, 0.25);
+    }}
     
     /* Green Accent Metrics */
-    .metric-value {
+    .metric-value {{
         font-size: 2rem;
         font-weight: 800;
         color: #74c69d;
-    }
+    }}
     
-    .metric-label {
+    .metric-label {{
         font-size: 0.85rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         color: #b7e4c7;
-    }
+    }}
     
     /* Styled Form Inputs */
-    .stTextInput>div>div>input, .stNumberInput>div>div>input, .stSelectbox>div>div>div {
+    .stTextInput>div>div>input, .stNumberInput>div>div>input, .stSelectbox>div>div>div {{
         background-color: rgba(27, 67, 50, 0.4) !important;
         border: 1px solid rgba(116, 198, 157, 0.2) !important;
         color: #e8f5e9 !important;
         border-radius: 10px !important;
         padding: 6px 12px !important;
         font-family: 'Inter', sans-serif !important;
-    }
+    }}
     
     /* Custom buttons */
-    .stButton>button {
+    .stButton>button {{
         background: linear-gradient(135deg, #40916c 0%, #1b4332 100%) !important;
         color: #e8f5e9 !important;
         border: 1px solid rgba(116, 198, 157, 0.3) !important;
@@ -407,32 +419,32 @@ st.markdown("""
         transition: all 0.3s ease !important;
         width: 100%;
         box-shadow: 0 4px 12px rgba(27, 67, 50, 0.4) !important;
-    }
+    }}
     
-    .stButton>button:hover {
+    .stButton>button:hover {{
         background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%) !important;
         transform: translateY(-1px) !important;
         box-shadow: 0 6px 15px rgba(82, 183, 136, 0.4) !important;
         border-color: #74c69d !important;
-    }
+    }}
     
     /* Sidebar styling */
-    .stSidebar {
+    .stSidebar {{
         background-color: #06110a !important;
         border-right: 1px solid rgba(116, 198, 157, 0.15) !important;
-    }
+    }}
     
-    .sidebar-title {
+    .sidebar-title {{
         font-size: 1.6rem;
         font-weight: 800;
         color: #74c69d;
         margin-bottom: 20px;
         text-align: center;
         letter-spacing: -0.5px;
-    }
+    }}
     
     /* Helper classes */
-    .tag {
+    .tag {{
         background-color: rgba(116, 198, 157, 0.15);
         color: #74c69d;
         padding: 4px 10px;
@@ -442,11 +454,11 @@ st.markdown("""
         display: inline-block;
         margin-right: 6px;
         margin-bottom: 6px;
-    }
-    .accent-text {
+    }}
+    .accent-text {{
         color: #b7e4c7;
         font-weight: 600;
-    }
+    }}
     </style>
 """, unsafe_allow_html=True)
 
