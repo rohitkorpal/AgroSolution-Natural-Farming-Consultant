@@ -98,7 +98,7 @@ AgroSolution-main/
 1. **Clone the Repository**:
    ```bash
    git clone <repo-url>
-   cd AgroSolution-main
+   cd AgroSolution-Natural-Farming-Consultant
    ```
 
 2. **Install Dependencies**:
