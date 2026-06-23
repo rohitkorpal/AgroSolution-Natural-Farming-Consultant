@@ -697,6 +697,8 @@ if menu in ["🎙️ Voice Assistant", "🎙️ वॉइस असिस्ट�
             st.session_state.academy_key += 1
             if "voice_academy_response" in st.session_state:
                 del st.session_state.voice_academy_response
+            if "voice_academy_audio" in st.session_state:
+                del st.session_state.voice_academy_audio
             st.rerun()
             
     if ask_pressed:
@@ -756,6 +758,29 @@ Respond exclusively in {target_lang}. All headings and explanations must be in {
 <h4 style="color:#74c69d; margin-top:0;">{ 'Expert Response' if not is_hindi else 'विशेषज्ञ की प्रतिक्रिया' }</h4>
 <p style="font-size:1.05rem; line-height:1.6; color:#e8f5e9; white-space: pre-wrap;">{st.session_state.voice_academy_response}</p>
 </div>""", unsafe_allow_html=True)
+        
+        # Audio playback option for Expert Response
+        if "voice_academy_audio" not in st.session_state:
+            if st.button("🔊 Listen to Response" if not is_hindi else "🔊 उत्तर सुनें", key="btn_listen_expert"):
+                with st.spinner("Generating speech... / आवाज़ तैयार कर रहे हैं..."):
+                    try:
+                        from gtts import gTTS
+                        import io
+                        speech_text = st.session_state.voice_academy_response
+                        # Detect if there are Hindi characters to choose the right TTS language
+                        has_hindi = any(ord(char) >= 0x0900 and ord(char) <= 0x097F for char in speech_text)
+                        tts_lang = 'hi' if (has_hindi or is_hindi) else 'en'
+                        tts = gTTS(text=speech_text, lang=tts_lang, slow=False)
+                        fp = io.BytesIO()
+                        tts.write_to_fp(fp)
+                        fp.seek(0)
+                        st.session_state.voice_academy_audio = fp.read()
+                        st.rerun()
+                    except Exception as e:
+                        st.warning(f"Voice generation failed: {str(e)}")
+        
+        if "voice_academy_audio" in st.session_state:
+            st.audio(st.session_state.voice_academy_audio, format="audio/mp3", autoplay=True)
 
 # ----------------------------------------------------
 # 2. Crop & Seed Guidance Module
