@@ -1,4 +1,4 @@
-# 🌾 Voice-Based Multilevel Natural Farming Consultant
+# 🌾 AgroSolution - Natural Farming Consultant
 
 A premium, interactive, AI-powered Streamlit web application designed as a voice-first mobile/desktop consultant for farmers transitioning to Zero Budget Natural Farming (ZBNF) and organic cultivation. 
 
