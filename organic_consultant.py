@@ -17,6 +17,18 @@ st.set_page_config(
 
 # Helper functions for Gemini API
 def get_api_key():
+    # Streamlit Cloud Secrets
+    try:
+        return st.secrets["GEMINI_API_KEY"]
+    except:
+        pass
+
+    # Environment Variable
+    api_key = os.getenv("GEMINI_API_KEY")
+    if api_key:
+        return api_key
+
+    # Local .env File
     env_path = os.path.join(os.path.dirname(__file__), '.env')
     if os.path.exists(env_path):
         with open(env_path, 'r') as f:
@@ -25,6 +37,7 @@ def get_api_key():
                     key, val = line.strip().split('=', 1)
                     if key.strip() == 'GEMINI_API_KEY':
                         return val.strip().replace('"', '').replace("'", "")
+
     return None
 
 def get_base64_of_bin_file(bin_file):
