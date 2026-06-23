@@ -4,4 +4,3 @@ numpy
 joblib
 requests
 gTTS
-os
