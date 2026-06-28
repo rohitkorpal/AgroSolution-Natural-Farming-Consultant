@@ -1,7 +1,6 @@
-<img width="1457" height="636" alt="image" src="https://github.com/user-attachments/assets/b43366b0-8b67-4403-94b6-399d9b4a607b" />
 
 
-# 🌾 AgroSolution - Natural Farming Consultant
+# 🌾 Krishi Mitraa AI - Natural Farming Consultant
 
 A premium, interactive, AI-powered Streamlit web application designed as a voice-first mobile/desktop consultant for farmers transitioning to Zero Budget Natural Farming (ZBNF) and organic cultivation. 
 
@@ -78,7 +77,7 @@ Your instructions:
 
 ## 📂 Project Directory Structure
 ```text
-AgroSolution-main/
+Krishi Mitraa AI-main/
 │
 ├── UI - Copy/
 │   ├── models/
@@ -101,7 +100,7 @@ AgroSolution-main/
 1. **Clone the Repository**:
    ```bash
    git clone <repo-url>
-   cd AgroSolution-Natural-Farming-Consultant
+   cd Krishi Mitraa AI-Natural-Farming-Consultant
    ```
 
 2. **Install Dependencies**:
